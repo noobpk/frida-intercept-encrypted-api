@@ -21,6 +21,9 @@ print ("\033[1;34m[*]___author___: @noobpk\033[1;37m")
 print ("\033[1;34m[*]___version___: 1.0\033[1;37m")
 print ("")
 
+BURP_HOST = "127.0.0.1"
+BURP_PORT = 26080
+
 def check_platform():
     try:
         platforms = {
@@ -74,38 +77,46 @@ def handle_del_log():
     except Exception as e:
         logger.error("[x_x] Something went wrong when clear error log. Please clear error log manual.\n Message - {0}".format(e))
 
-BURP_HOST = "127.0.0.1"
-BURP_PORT = 26080
-
-def frida_process_message(message, data):
-    handled = False
-    print ('message:',  message)
-    if message['type'] == 'input':
-        handled = True
-        print (message["payload"])
-    elif message['type'] == 'send':
-        stanza = message['payload']
-
-        if stanza['from'] == '/http':
-            req = requests.request('FRIDA', 'http://%s:%d/' % (BURP_HOST, BURP_PORT), headers={'content-type':'text/plain'}, data=stanza['payload'])
-            script.post({ 'type': 'input', 'payload': req.text })
-            handled = True
-
 def main():
+    def frida_process_message(message, data):
+        handled = False
+        print ('message:',  message)
+        if message['type'] == 'input':
+            handled = True
+            print (message["payload"])
+        elif message['type'] == 'send':
+            stanza = message['payload']
+
+            if stanza['from'] == '/http':
+                req = requests.request('FRIDA', 'http://%s:%d/' % (BURP_HOST, BURP_PORT), headers={'content-type':'text/plain'}, data=stanza['payload'])
+                script.post({ 'type': 'input', 'payload': req.text })
+                handled = True
+
     parser = argparse.ArgumentParser()
-    parser.add_argument("-p", "--package", required=True)
-    args = vars(parser.parse_args())
+    parser.add_argument("-p", "--package")
+    parser.add_argument("-n", "--name")
+    args, leftovers = parser.parse_known_args()
     try:
-        device = frida.get_usb_device()
-        pid = device.spawn([args['package']])
-        device.resume(pid)
-        time.sleep(1)
-        session = device.attach(pid)
-        with open("handlers.js") as f:
-            script = session.create_script(f.read())
-        script.on("message", frida_process_message)
-        script.load()
-        input()
+        #Spawning application and load script
+        if args.package is not None:
+            device = frida.get_usb_device()
+            pid = device.spawn([args['package']])
+            device.resume(pid)
+            time.sleep(1)
+            session = device.attach(pid)
+            with open("handlers.js") as f:
+                script = session.create_script(f.read())
+            script.on("message", frida_process_message)
+            script.load()
+            input()
+        #Attaching script to application
+        if args.name is not None:
+            process = frida.get_usb_device().attach(args.name)
+            with open("handlers.js") as f:
+                script = process.create_script(f.read())
+            script.on("message", frida_process_message)
+            script.load()
+            input()
 
     #EXCEPTION FOR FRIDA
     except frida.ServerNotRunningError:
