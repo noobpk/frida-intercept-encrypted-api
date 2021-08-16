@@ -15,5 +15,8 @@ Banking applications are increasingly enhanced with confidentiality. One of them
 
 *Note: Different applications will use different libraries. You need to reverse or trace the application to find the correct function.
 
+## Medium
+https://lethanhphuc-pk.medium.com/frida-ios-intercept-api-a5c4ef22a093
+
 ## Demo
 https://youtu.be/hn1GV-JCpjc
