@@ -9,4 +9,4 @@ Banking applications are increasingly enhanced with confidentiality. One of them
      - Redirect to 127.0.0.1:27080 and Check (Support invisible proxying)
  1. Run echoServer.py
  1. Config and optimize handlers.js
- 1. Run burpTracer.py
+ 1. Run burpTracer.py -p com.application.xyz
