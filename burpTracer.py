@@ -18,7 +18,7 @@ print ('''\033[1;31m \n
 ''')
 
 print ("\033[1;34m[*]___author___: @noobpk\033[1;37m")
-print ("\033[1;34m[*]___version___: 1.0\033[1;37m")
+print ("\033[1;34m[*]___version___: 1.1\033[1;37m")
 print ("")
 
 BURP_HOST = "127.0.0.1"
@@ -88,7 +88,7 @@ def main():
             stanza = message['payload']
 
             if stanza['from'] == '/http':
-                req = requests.request('FRIDA', 'http://%s:%d/' % (BURP_HOST, BURP_PORT), headers={'content-type':'text/plain'}, data=stanza['payload'])
+                req = requests.request('FRIDA', 'http://%s:%d/' % (BURP_HOST, BURP_PORT), headers={'content-type':'text/plain'}, data=stanza['payload'].encode('utf-8'))
                 script.post({ 'type': 'input', 'payload': req.text })
                 handled = True
 
