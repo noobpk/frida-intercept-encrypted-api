@@ -1,7 +1,9 @@
 # Frida iOS intercept api 
-
 <img width="621" alt="image" src="https://user-images.githubusercontent.com/31820707/129575322-c601d548-1a48-4bcb-a23f-fefa751b93c1.png">
 
+[![CodeQL](https://github.com/noobpk/frida-ios-intercept-api/actions/workflows/codeql-analysis.yml/badge.svg?branch=main)](https://github.com/noobpk/frida-ios-intercept-api/actions/workflows/codeql-analysis.yml)
+![python](https://img.shields.io/badge/python-3.x-blue)
+![frida](https://img.shields.io/badge/frida-15.x-orange)
 ## What does it help?
 Banking applications are increasingly enhanced with confidentiality. One of them is the encryption of request / response data when sending and receiving. Some weak encryptions can be decrypted easily, but some strong encryptions like RSA are difficult. Hooking into functions that send request/response and intercept data before it's encrypted is one way we can view and modify the data.
 
