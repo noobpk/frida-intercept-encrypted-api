@@ -5,6 +5,31 @@
 ## What does it help?
 Banking applications are increasingly enhanced with confidentiality. One of them is the encryption of request / response data when sending and receiving. Some weak encryptions can be decrypted easily, but some strong encryptions like RSA are difficult. Hooking into functions that send request/response and intercept data before it's encrypted is one way we can view and modify the data.
 
+# Configurage handlers.js
+1. Add your Request / Response Class & Method
+```
+/*Request Class & Method*/
+var search_request_class  = [''];
+var search_request_method = [''];
+
+/*Response Class & Method*/
+var search_response_class  = [''];
+var search_response_method = [''];`
+```
+2. Debug ARGS in method
+```
+/*DEBUG ARGS*/
+//print_arguments(args);
+// console.log(ObjC.Object(args[3]));
+// var message1 = ObjC.Object(args[2]);
+// var message2 = ObjC.Object(args[3]);
+// var message3 = ObjC.Object(args[4]);
+
+// console.log('msg1=' + message1.toString() + ",type: "+ message1.$className);
+// console.log('msg2=' + message2.toString() + ",type: "+ message2.$className);
+// console.log('msg3=' + message3.toString() + ",type: "+ message3.$className);
+```
+
 ## Usage
  1. Set up Burp listener
      - Listen on 127.0.0.1:26080
@@ -18,8 +43,9 @@ Banking applications are increasingly enhanced with confidentiality. One of them
 ## Medium
 https://medium.com/p/a5c4ef22a093
 
-## Demo
-|Application|Link|
+## Working with
+|Application|Demo|
 |-----------|----|
 |OceanBank|https://youtu.be/hn1GV-JCpjc|
 |SaiGonBank Smart Banking|https://youtu.be/7C0SLvtI7RY|
+|BaoViet Smart||
