@@ -116,6 +116,7 @@ It stops when:
 
 if (ObjC.available)
 {
+    console.log(colors.green,"\n[*] Loading Script: handlers.js version@1.2",colors.resetColor);
     console.log(colors.green,"\n[*] Started: Hooking.... ",colors.resetColor);
     console.log(colors.green,"\n[*] Hooking Request: ",colors.resetColor);
     var classes_request_found = search_request_classes();
@@ -134,13 +135,14 @@ if (ObjC.available)
 
             Interceptor.attach(hooking.implementation, {
                 onEnter: function (args, state) {
+                    /*DEBUG REQUEST ZONE*/
                     this._className = ObjC.Object(args[0]).toString();
                     this._methodName = ObjC.selectorAsString(args[1]);
-                    console.log(colors.green,"[REQUEST] Detected call to: ",colors.resetColor);
+                    console.log(colors.green,"-------------------------------------",colors.resetColor);
+                    console.log(colors.green,"[DEBUG-REQUEST] Detected call to: ",colors.resetColor);
                     console.log('   ' + this._className + ' --> ' + this._methodName);
-                    console.log(colors.green,"[REQUEST] Dump Arugment in method: ",colors.resetColor);
-                    /*DEBUG ARGS*/
-                    //print_arguments(args);
+                    // console.log(colors.green,"[DEBUG-REQUEST] Dump Arugment in method: ",colors.resetColor);
+                    // print_arguments(args);
                     // console.log(ObjC.Object(args[3]));
                     // var message1 = ObjC.Object(args[2]);
                     // var message2 = ObjC.Object(args[3]);
@@ -162,24 +164,26 @@ if (ObjC.available)
                         js[key] = value.toString();
                     }
 
-                    console.log('js:', JSON.stringify(js));
-
+                    console.log(colors.green,"-------------------------------------",colors.resetColor);
+                    console.log(colors.green,"[Original Request Body]\n",colors.resetColor, JSON.stringify(js), '\n');
                     send({from: '/http', payload: JSON.stringify(js)})
                     var op = recv('input', function(value) { // callback function
-                        console.log("Forwarding mitm'ed content: " + value.payload);
-                        var js = JSON.parse(value.payload);
-                        console.log('js response:', js);
-                        var param_dict = ObjC.classes.NSMutableDictionary.alloc().init();
-                        var NSString = ObjC.classes.NSString;    
-                        for(var key in js){
-                            if(js.hasOwnProperty(key)){
-                                console.log(key + " -> " + js[key]);
-                                var valueObject = NSString.stringWithString_(js[key]); 
-                                param_dict.setObject_forKey_(valueObject, key);
+                        console.log(colors.green,"\n [Forwarding MITM Request Body]\n",colors.resetColor, value.payload);
+                        var data = JSON.parse(value.payload);
+                        console.log(colors.green,"\n [Data Structure]",colors.resetColor);
+                        console.log(colors.green,"\n  [+] Data Type:",colors.resetColor, data);
+                        var dataDict = ObjC.classes.NSMutableDictionary.alloc().init();
+                        var NSString = ObjC.classes.NSString; 
+                        console.log(colors.green,"\n  [+] Parser Key -> Value:",colors.resetColor);   
+                        for(var key in data){
+                            if(data.hasOwnProperty(key)){
+                                console.log('  ', key + " -> " + data[key]);
+                                var valueObject = NSString.stringWithString_(data[key]); 
+                                dataDict.setObject_forKey_(valueObject, key);
                             }
                         }
-                        console.log('param_dict:', param_dict);
-                        args[3] = param_dict;
+                        console.log(colors.green,"\n  [+] Data Dict:\n",colors.resetColor, dataDict);
+                        args[3] = dataDict;
                     });
                     op.wait();
                 },
@@ -206,14 +210,15 @@ if (ObjC.available)
 
             Interceptor.attach(hooking.implementation, {
                 onEnter: function (args, state) {
+                    /*DEBUG RESPONSE ZONE*/
                     this._className = ObjC.Object(args[0]).toString();
                     this._methodName = ObjC.selectorAsString(args[1]);
-                    console.log(colors.green,"[RESPONSE] Detected call to: ",colors.resetColor);
+                    console.log(colors.green,"-------------------------------------",colors.resetColor);
+                    console.log(colors.green,"[DEBUG-RESPONSE] Detected call to: ",colors.resetColor);
                     console.log('   ' + this._className + ' --> ' + this._methodName);
-                    console.log(colors.green,"[RESPONSE] Dump Arugment in method: ",colors.resetColor);
-                    /*DEBUG ARGS*/
-                    //print_arguments(args);
-                    //console.log(ObjC.Object(args[2]));
+                    // console.log(colors.green,"[DEBUG-RESPONSE] Dump Arugment in method: ",colors.resetColor);
+                    // print_arguments(args);
+                    // console.log(ObjC.Object(args[2]));
                     // var message1 = ObjC.Object(args[2]);
                     // var message2 = ObjC.Object(args[3]);
                     // var message3 = ObjC.Object(args[4]);
@@ -234,24 +239,26 @@ if (ObjC.available)
                         js[key] = value.toString();
                     }
 
-                    console.log('js:', JSON.stringify(js));
-
+                    console.log(colors.green,"-------------------------------------",colors.resetColor);
+                    console.log(colors.green,"[Original Response Body]\n",colors.resetColor, JSON.stringify(js), '\n');
                     send({from: '/http', payload: JSON.stringify(js)})
                     var op = recv('input', function(value) { // callback function
-                        console.log("Forwarding mitm'ed content: " + value.payload);
-                        var js = JSON.parse(value.payload);
-                        console.log('js response:', js);
-                        var param_dict = ObjC.classes.NSMutableDictionary.alloc().init();
-                        var NSString = ObjC.classes.NSString;    
-                        for(var key in js){
-                            if(js.hasOwnProperty(key)){
-                                console.log(key + " -> " + js[key]);
-                                var valueObject = NSString.stringWithString_(js[key]); 
-                                param_dict.setObject_forKey_(valueObject, key);
+                        console.log(colors.green,"\n [Forwarding MITM Response Body]\n",colors.resetColor, value.payload);
+                        var data = JSON.parse(value.payload);
+                        console.log(colors.green,"\n [Data Structure]",colors.resetColor);
+                        console.log(colors.green,"\n  [+] Data Type:",colors.resetColor, data);
+                        var dataDict = ObjC.classes.NSMutableDictionary.alloc().init();
+                        var NSString = ObjC.classes.NSString;
+                        console.log(colors.green,"\n  [+] Parser Key -> Value:",colors.resetColor);    
+                        for(var key in data){
+                            if(data.hasOwnProperty(key)){
+                                console.log('  ', key + " -> " + data[key]);
+                                var valueObject = NSString.stringWithString_(data[key]); 
+                                dataDict.setObject_forKey_(valueObject, key);
                             }
                         }
-                        console.log('param_dict:', param_dict);
-                        args[2] = param_dict;
+                        console.log(colors.green,"\n  [+] Data Dict:\n",colors.resetColor, dataDict);
+                        args[2] = dataDict;
                     });
                     op.wait();
                 },
