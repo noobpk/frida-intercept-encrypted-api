@@ -3,6 +3,7 @@ import requests
 import time
 import sys
 import os
+import socket
 import argparse
 from log import *
 
@@ -52,7 +53,16 @@ def check_ps_for_win32():
     except Exception as e:
         logger.error("[x_x] Something went wrong, please check your error message.\n Message - {0}".format(e))
 
-def run(identifier):
+def check_echo_server():
+    sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    result = sock.connect_ex(('127.0.0.1',27080))
+    if result == 0:
+       logger.info("[*] Connect to echoServer successfully.")
+    else:
+        sock.close()
+        sys.exit(logger.error("[x_x] Please start echoServer."))
+    
+def run():
     #check platform support
     check_platform()
     #check process iTunes for Win32s
@@ -63,7 +73,8 @@ def run(identifier):
         sys.exit(0)
     else:
         handle_del_log()
-        main(identifier)
+        check_echo_server()
+        main()
 
 def handle_del_log():
     try:
@@ -75,7 +86,7 @@ def handle_del_log():
         else:
             return True
     except Exception as e:
-        logger.error("[x_x] Something went wrong when clear error log. Please clear error log manual.\n Message - {0}".format(e))
+        logger.error("[x_x] Something went wrong when clear error log. Please clear error log manual.\n [Error Message] - {0}".format(e))
 
 def main():
     def frida_process_message(message, data):
@@ -88,9 +99,12 @@ def main():
             stanza = message['payload']
 
             if stanza['from'] == '/http':
-                req = requests.request('FRIDA', 'http://%s:%d/' % (BURP_HOST, BURP_PORT), headers={'content-type':'text/plain'}, data=stanza['payload'].encode('utf-8'))
-                script.post({ 'type': 'input', 'payload': req.text })
-                handled = True
+                try:
+                    req = requests.request('FRIDA', 'http://%s:%d/' % (BURP_HOST, BURP_PORT), headers={'content-type':'text/plain'}, data=stanza['payload'].encode('utf-8'))
+                    script.post({ 'type': 'input', 'payload': req.text })
+                    handled = True
+                except requests.exceptions.RequestException as e:
+                    logger.error("[x_x] Connection refused, please check configurage on BurpSute.\n [Error Message] - {0}".format(e))
 
     parser = argparse.ArgumentParser()
     parser.add_argument("-p", "--package")
@@ -136,4 +150,4 @@ def main():
         # sys.exit(0)
 
 if __name__ == '__main__':
-    main()
+    run()

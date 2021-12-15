@@ -1,5 +1,18 @@
 from http.server import HTTPServer, BaseHTTPRequestHandler
 from optparse import OptionParser
+from log import *
+
+print ('''\033[1;31m \n
+            _           _____                          
+           | |         / ____|                         
+   ___  ___| |__   ___| (___   ___ _ ____   _____ _ __ 
+  / _ \/ __| '_ \ / _ \\___ \ / _ \ '__\ \ / / _ \ '__|
+ |  __/ (__| | | | (_) |___) |  __/ |   \ V /  __/ |   
+  \___|\___|_| |_|\___/_____/ \___|_|    \_/ \___|_|                                                                                                                        
+''')
+print ("\033[1;34m[*]___author___: @noobpk\033[1;37m")
+print ("\033[1;34m[*]___version___: 1.0\033[1;37m")
+print ("")
 
 ECHO_PORT = 27080
 
@@ -19,10 +32,14 @@ class RequestHandler(BaseHTTPRequestHandler):
         self.wfile.write(self.rfile.read(length))
 
 def main():
-    print('Listening on localhost:%d' % ECHO_PORT)
-    server = HTTPServer(('', ECHO_PORT), RequestHandler)
-    server.serve_forever()
+    try:
+        logger.info('[*] Listening on 127.0.0.1:%d' % ECHO_PORT)
+        server = HTTPServer(('', ECHO_PORT), RequestHandler)
+        server.serve_forever()
+
+    except KeyboardInterrupt:
+        logger.info("Stop echoServer!!")
 
 if __name__ == "__main__":
-    print("[x] Starting echo server on port %d" % ECHO_PORT)
+    logger.info('[*] Starting echoServer on port %d' % ECHO_PORT)
     main()

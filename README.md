@@ -5,9 +5,11 @@
 ![python](https://img.shields.io/badge/python-3.x-blue)
 ![frida](https://img.shields.io/badge/frida-15.x-orange)
 ## What does it help?
-Banking applications are increasingly enhanced with confidentiality. One of them is the encryption of request / response data when sending and receiving. Some weak encryptions can be decrypted easily, but some strong encryptions like RSA are difficult. Hooking into functions that send request/response and intercept data before it's encrypted is one way we can view and modify the data.
+Banking applications, e-wallets, .. are increasingly enhanced security to fight hackers. One of them is to encrypt request/response data when sending and receiving. Some weak encryptions can be decrypted easily, but some strong encryptions like RSA are difficult.
+When pentesting a normal mobile application, we just need to set it up so that BurpSuite can intercept the request / response of the APIs that the application uses. But when pentesting a banking or e-wallet application with end-to-end encrypted API, with the usual BurpSuite setup we cannot see the content of the API.
+Hooking into functions that send request/response and intercept data before it is encrypted is one way we can view and modify data.
 
-# Configurage handlers.js
+## Configurage handlers.js
 1. Add your Request / Response Class & Method
 ```
 /*Request Class & Method*/
@@ -20,16 +22,17 @@ var search_response_method = [''];`
 ```
 2. Debug ARGS in method
 ```
-/*DEBUG ARGS*/
-//print_arguments(args);
-// console.log(ObjC.Object(args[3]));
-// var message1 = ObjC.Object(args[2]);
-// var message2 = ObjC.Object(args[3]);
-// var message3 = ObjC.Object(args[4]);
+/*DEBUG REQUEST ZONE*/
+console.log(colors.green,"[DEBUG-REQUEST] Dump Arugment in method: ",colors.resetColor);
+print_arguments(args);
+console.log(ObjC.Object(args[3]));
+var message1 = ObjC.Object(args[2]);
+var message2 = ObjC.Object(args[3]);
+var message3 = ObjC.Object(args[4]);
 
-// console.log('msg1=' + message1.toString() + ",type: "+ message1.$className);
-// console.log('msg2=' + message2.toString() + ",type: "+ message2.$className);
-// console.log('msg3=' + message3.toString() + ",type: "+ message3.$className);
+console.log('msg1=' + message1.toString() + ",type: "+ message1.$className);
+console.log('msg2=' + message2.toString() + ",type: "+ message2.$className);
+console.log('msg3=' + message3.toString() + ",type: "+ message3.$className);
 ```
 
 ## Usage
@@ -50,4 +53,4 @@ https://medium.com/p/a5c4ef22a093
 |-----------|----|
 |OceanBank|https://youtu.be/hn1GV-JCpjc|
 |SaiGonBank Smart Banking|https://youtu.be/7C0SLvtI7RY|
-|BaoViet Smart||
+|BaoViet Smart|https://youtu.be/1JWRDhR79qk|
