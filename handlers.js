@@ -116,7 +116,7 @@ It stops when:
 
 if (ObjC.available)
 {
-    console.log(colors.green,"\n[*] Loading Script: handlers.js version@1.2",colors.resetColor);
+    console.log(colors.green,"\n[*] Loading Script: handlers.js v1.2",colors.resetColor);
     console.log(colors.green,"\n[*] Started: Hooking.... ",colors.resetColor);
     console.log(colors.green,"\n[*] Hooking Request: ",colors.resetColor);
     var classes_request_found = search_request_classes();
@@ -135,12 +135,12 @@ if (ObjC.available)
 
             Interceptor.attach(hooking.implementation, {
                 onEnter: function (args, state) {
-                    /*DEBUG REQUEST ZONE*/
-                    this._className = ObjC.Object(args[0]).toString();
-                    this._methodName = ObjC.selectorAsString(args[1]);
-                    console.log(colors.green,"-------------------------------------",colors.resetColor);
-                    console.log(colors.green,"[DEBUG-REQUEST] Detected call to: ",colors.resetColor);
-                    console.log('   ' + this._className + ' --> ' + this._methodName);
+                    /*DEBUG REQUEST HERE*/
+                    // this._className = ObjC.Object(args[0]).toString();
+                    // this._methodName = ObjC.selectorAsString(args[1]);
+                    // console.log(colors.green,"-------------------------------------",colors.resetColor);
+                    // console.log(colors.green,"[DEBUG-REQUEST] Detected call to: ",colors.resetColor);
+                    // console.log('   ' + this._className + ' --> ' + this._methodName);
                     // console.log(colors.green,"[DEBUG-REQUEST] Dump Arugment in method: ",colors.resetColor);
                     // print_arguments(args);
                     // console.log(ObjC.Object(args[3]));
@@ -170,7 +170,7 @@ if (ObjC.available)
                     var op = recv('input', function(value) { // callback function
                         console.log(colors.green,"\n [Forwarding MITM Request Body]\n",colors.resetColor, value.payload);
                         var data = JSON.parse(value.payload);
-                        console.log(colors.green,"\n [Data Structure]",colors.resetColor);
+                        console.log(colors.green,"\n [Data Structures]",colors.resetColor);
                         console.log(colors.green,"\n  [+] Data Type:",colors.resetColor, data);
                         var dataDict = ObjC.classes.NSMutableDictionary.alloc().init();
                         var NSString = ObjC.classes.NSString; 
@@ -207,15 +207,16 @@ if (ObjC.available)
             var _methodName = "" + methods_response_found[j];
             var hooking = ObjC.classes[_className][_methodName];
             console.log('   ' + methods_response_found[j]);
+            
 
             Interceptor.attach(hooking.implementation, {
                 onEnter: function (args, state) {
-                    /*DEBUG RESPONSE ZONE*/
-                    this._className = ObjC.Object(args[0]).toString();
-                    this._methodName = ObjC.selectorAsString(args[1]);
-                    console.log(colors.green,"-------------------------------------",colors.resetColor);
-                    console.log(colors.green,"[DEBUG-RESPONSE] Detected call to: ",colors.resetColor);
-                    console.log('   ' + this._className + ' --> ' + this._methodName);
+                    /*DEBUG RESPONSE HERE*/
+                    // this._className = ObjC.Object(args[0]).toString();
+                    // this._methodName = ObjC.selectorAsString(args[1]);
+                    // console.log(colors.green,"-------------------------------------",colors.resetColor);
+                    // console.log(colors.green,"[DEBUG-RESPONSE] Detected call to: ",colors.resetColor);
+                    // console.log('   ' + this._className + ' --> ' + this._methodName);
                     // console.log(colors.green,"[DEBUG-RESPONSE] Dump Arugment in method: ",colors.resetColor);
                     // print_arguments(args);
                     // console.log(ObjC.Object(args[2]));
@@ -245,7 +246,7 @@ if (ObjC.available)
                     var op = recv('input', function(value) { // callback function
                         console.log(colors.green,"\n [Forwarding MITM Response Body]\n",colors.resetColor, value.payload);
                         var data = JSON.parse(value.payload);
-                        console.log(colors.green,"\n [Data Structure]",colors.resetColor);
+                        console.log(colors.green,"\n [Data Structures]",colors.resetColor);
                         console.log(colors.green,"\n  [+] Data Type:",colors.resetColor, data);
                         var dataDict = ObjC.classes.NSMutableDictionary.alloc().init();
                         var NSString = ObjC.classes.NSString;

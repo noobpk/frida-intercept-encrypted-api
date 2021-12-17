@@ -22,7 +22,7 @@ var search_response_method = [''];`
 ```
 2. Debug ARGS in method
 ```
-/*DEBUG REQUEST ZONE*/
+/*DEBUG REQUEST HERE*/
 console.log(colors.green,"[DEBUG-REQUEST] Dump Arugment in method: ",colors.resetColor);
 print_arguments(args);
 console.log(ObjC.Object(args[3]));
@@ -49,8 +49,8 @@ console.log('msg3=' + message3.toString() + ",type: "+ message3.$className);
 https://medium.com/p/a5c4ef22a093
 
 ## Working with
-|Application|Demo|
-|-----------|----|
-|OceanBank|https://youtu.be/hn1GV-JCpjc|
-|SaiGonBank Smart Banking|https://youtu.be/7C0SLvtI7RY|
-|BaoViet Smart|https://youtu.be/1JWRDhR79qk|
+|Application|Demo|Request Class & Method|Response Class & MEthod|
+|-----------|----|||
+|OceanBank|https://youtu.be/hn1GV-JCpjc|||
+|SaiGonBank Smart Banking|https://youtu.be/7C0SLvtI7RY|||
+|BaoViet Smart|https://youtu.be/1JWRDhR79qk|||
