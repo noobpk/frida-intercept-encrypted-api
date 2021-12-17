@@ -50,7 +50,7 @@ https://medium.com/p/a5c4ef22a093
 
 ## Working with
 |Application|Demo|Request Class & Method|Response Class & MEthod|
-|-----------|----|||
+|-----------|----|----------------------|-----------------------|
 |OceanBank|https://youtu.be/hn1GV-JCpjc|||
 |SaiGonBank Smart Banking|https://youtu.be/7C0SLvtI7RY|||
 |BaoViet Smart|https://youtu.be/1JWRDhR79qk|||
