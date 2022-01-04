@@ -19,7 +19,7 @@ print ('''\033[1;31m \n
 ''')
 
 print ("\033[1;34m[*]___author___: @noobpk\033[1;37m")
-print ("\033[1;34m[*]___version___: 1.1\033[1;37m")
+print ("\033[1;34m[*]___version___: 1.2\033[1;37m")
 print ("")
 
 BURP_HOST = "127.0.0.1"
@@ -73,7 +73,6 @@ def run():
         sys.exit(0)
     else:
         handle_del_log()
-        check_echo_server()
         main()
 
 def handle_del_log():
@@ -96,11 +95,12 @@ def main():
             handled = True
             print (message["payload"])
         elif message['type'] == 'send':
-            stanza = message['payload']
+            body = message['payload']
+            API_PATH = body['api_path']
 
-            if stanza['from'] == '/http':
+            if body['from'] == '/http':
                 try:
-                    req = requests.request('FRIDA', 'http://%s:%d/' % (BURP_HOST, BURP_PORT), headers={'content-type':'text/plain'}, data=stanza['payload'].encode('utf-8'))
+                    req = requests.request('FRIDA', 'http://%s:%d/%s' % (BURP_HOST, BURP_PORT, API_PATH), headers={'content-type':'text/plain'}, data=body['payload'].encode('utf-8'))
                     script.post({ 'type': 'input', 'payload': req.text })
                     handled = True
                 except requests.exceptions.RequestException as e:
@@ -109,12 +109,20 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("-p", "--package")
     parser.add_argument("-n", "--name")
+    parser.add_argument("-s", "--script", help='custom handler script')
     args, leftovers = parser.parse_known_args()
+
     try:
-        #Spawning application and load script
-        if args.package is not None:
+        #Spawning application with default script
+        if args.package is not None and args.script is None:
+            #check echoServer
+            check_echo_server()
+            #
+            logger.info('[*] Spawning: ' + args.package)
+            logger.info('[*] Script: ' + 'handlers.js')
+            time.sleep(2)
             device = frida.get_usb_device()
-            pid = device.spawn([args['package']])
+            pid = device.spawn(args.package)
             device.resume(pid)
             time.sleep(1)
             session = device.attach(pid)
@@ -123,10 +131,51 @@ def main():
             script.on("message", frida_process_message)
             script.load()
             input()
-        #Attaching script to application
-        if args.name is not None:
+        #Attaching default script to application
+        if args.name is not None and args.script is None:
+            #check echoServer
+            check_echo_server()
+            #
+            logger.info('[*] Attaching: ' + args.name)
+            logger.info('[*] Script: ' + 'handlers.js')
+            time.sleep(2)
             process = frida.get_usb_device().attach(args.name)
             with open("handlers.js") as f:
+                script = process.create_script(f.read())
+            script.on("message", frida_process_message)
+            script.load()
+            input()
+        # Spawing application with custom script
+        if args.package is not None and args.script is not None:
+            #check echoServer
+            check_echo_server()
+            #
+            if os.path.isfile(args.script):
+                logger.info('[*] Spawning: ' + args.package)
+                logger.info('[*] Script: ' + args.script)
+                time.sleep(2)
+                device = frida.get_usb_device()
+                pid = device.spawn(args.package)
+                device.resume(pid)
+                time.sleep(1)
+                session = device.attach(pid)
+                with open(args.script) as f:
+                    script = session.create_script(f.read())
+                script.on("message", frida_process_message)
+                script.load()
+                input()
+            else:
+                logger.error('[?] Script not found!')
+        #Attaching default script to application
+        if args.name is not None and args.script is not None:
+            #check echoServer
+            check_echo_server()
+            #
+            logger.info('[*] Attaching: ' + args.name)
+            logger.info('[*] Script: ' + args.script)
+            time.sleep(2)
+            process = frida.get_usb_device().attach(args.name)
+            with open(args.script) as f:
                 script = process.create_script(f.read())
             script.on("message", frida_process_message)
             script.load()
