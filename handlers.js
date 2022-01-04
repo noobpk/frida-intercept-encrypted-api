@@ -1,3 +1,4 @@
+/*HANDLERS SCRIPT VERSION 1.3*/
 /*Terminal Color*/
 var colors = {
     "resetColor": "\x1b[0m",
@@ -5,6 +6,11 @@ var colors = {
     "yellow": "\x1b[33m",
     "red": "\x1b[31m"
 }
+
+/*GLOBAL VARIABLE*/
+var API_URL;
+var API_PATH;
+var HTTP_METHOD;
 
 /*Request Class & Method*/
 var search_request_class  = [''];
@@ -116,8 +122,27 @@ It stops when:
 
 if (ObjC.available)
 {
-    console.log(colors.green,"\n[*] Loading Script: handlers.js v1.2",colors.resetColor);
+    console.log(colors.green,"\n[*] Loading Script: \u2713",colors.resetColor);
     console.log(colors.green,"\n[*] Started: Hooking.... ",colors.resetColor);
+    console.log(colors.green,"\n[*] Hooking API Url: ",colors.resetColor);
+    var className = "NSURLSession"; 
+    var funcName = "- dataTaskWithRequest:completionHandler:"; 
+    console.log(className);
+    console.log('   ' + funcName);
+
+    var hook = eval('ObjC.classes.' + className + '["' + funcName + '"]');
+
+    Interceptor.attach(hook.implementation, {  
+        onEnter: function(args) 
+            {
+                HTTP_METHOD = ObjC.Object(args[2]).HTTPMethod();
+                API_URL = ObjC.Object(args[2]).URL().absoluteString();
+                var url = API_URL;
+                var matches = /(https?:\/\/.*?)([/$].*)/.exec(url);
+                //var domain = matches[1];
+                API_PATH = matches[2];
+            }
+    });
     console.log(colors.green,"\n[*] Hooking Request: ",colors.resetColor);
     var classes_request_found = search_request_classes();
     for (var i = 0; i < classes_request_found.length; ++i) {
@@ -165,8 +190,17 @@ if (ObjC.available)
                     }
 
                     console.log(colors.green,"-------------------------------------",colors.resetColor);
+                    console.log(colors.green,"[+] METHOD: ",colors.resetColor + HTTP_METHOD );
+                    console.log(colors.green,"[+] URL: ",colors.resetColor + API_URL );
+                    console.log(colors.green,"[+] API: ",colors.resetColor + API_PATH );
+                    console.log(colors.green,"-------------------------------------",colors.resetColor);
                     console.log(colors.green,"[Original Request Body]\n",colors.resetColor, JSON.stringify(js), '\n');
-                    send({from: '/http', payload: JSON.stringify(js)})
+                    if (typeof(API_PATH) === 'undefined') {
+                        send({from: '/http', payload: JSON.stringify(js), api_path: 'request'})
+                    }
+                    else {
+                        send({from: '/http', payload: JSON.stringify(js), api_path: API_PATH})
+                    }
                     var op = recv('input', function(value) { // callback function
                         console.log(colors.green,"\n [Forwarding MITM Request Body]\n",colors.resetColor, value.payload);
                         var data = JSON.parse(value.payload);
@@ -242,7 +276,11 @@ if (ObjC.available)
 
                     console.log(colors.green,"-------------------------------------",colors.resetColor);
                     console.log(colors.green,"[Original Response Body]\n",colors.resetColor, JSON.stringify(js), '\n');
-                    send({from: '/http', payload: JSON.stringify(js)})
+                    if (typeof(API_PATH) === 'undefined') {
+                        send({from: '/http', payload: JSON.stringify(js), api_path: 'response'})
+                    } else {
+                        send({from: '/http', payload: JSON.stringify(js), api_path: API_PATH})
+                    }
                     var op = recv('input', function(value) { // callback function
                         console.log(colors.green,"\n [Forwarding MITM Response Body]\n",colors.resetColor, value.payload);
                         var data = JSON.parse(value.payload);
