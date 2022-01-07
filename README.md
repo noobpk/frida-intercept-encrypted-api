@@ -4,7 +4,8 @@
 [![CodeQL](https://github.com/noobpk/frida-ios-intercept-api/actions/workflows/codeql-analysis.yml/badge.svg?branch=main)](https://github.com/noobpk/frida-ios-intercept-api/actions/workflows/codeql-analysis.yml)
 ![python](https://img.shields.io/badge/python-3.x-blue)
 ![frida](https://img.shields.io/badge/frida-15.x-orange)
-## What does it help?
+
+## 📍What does it help?
 Banking applications, e-wallets, .. are increasingly enhanced security to fight hackers. One of them is to encrypt request/response data when sending and receiving. Some weak encryptions can be decrypted easily, but some strong encryptions like RSA are difficult.
 When pentesting a normal mobile application, we just need to set it up so that BurpSuite can intercept the request / response of the APIs that the application uses. But when pentesting a banking or e-wallet application with end-to-end encrypted API, with the usual BurpSuite setup we cannot see the content of the API.
 Hooking into functions that send request/response and intercept data before it is encrypted is one way we can view and modify data.
@@ -39,17 +40,17 @@ console.log('msg3=' + message3.toString() + ",type: "+ message3.$className);
 ```
 
 ## Usage
- 1. Set up Burp listener
+ 1. Load `burpsuite_configuration_proxy.json` or Set up Burpsuite Proxy by following the steps below
      - Listen on 127.0.0.1:26080
      - Redirect to 127.0.0.1:27080 and Check (Support invisible proxying)
  1. Run echoServer.py
- 1. Config and optimize handlers.js
+ 1. Config and optimize `handlers.js`
  1. Run burpTracer.py -p com.apple.AppStore / [-n 'App Store']
 
-*Note: Different applications will use different libraries. You need to reverse or trace the application to find the correct function.
+`Note: Different applications will use different libraries. You need to reverse or trace the application to find the correct function.`
 
-## Medium
-https://medium.com/p/a5c4ef22a093
+## Medium 
+[Frida iOS Intercept Api](https://medium.com/p/a5c4ef22a093)
 
 ## Working with
 |Application|Demo|Request Class & Method|Response Class & MEthod|
