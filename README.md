@@ -11,7 +11,7 @@ When pentesting a normal mobile application, we just need to set it up so that B
 Hooking into functions that send request/response and intercept data before it is encrypted is one way we can view and modify data.
 
 ## Architecture
-<img width="1161" alt="image" src="https://user-images.githubusercontent.com/31820707/148061865-45069a1d-48fa-4af1-b47a-df29a8cf9292.png">
+![image](https://user-images.githubusercontent.com/31820707/156414752-4b416b0b-a19b-4124-acbc-54564227dd8f.png)
 
 ## Configurage handlers.js
 1. Add your Request / Response Class & Method
