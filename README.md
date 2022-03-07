@@ -53,9 +53,16 @@ console.log('msg3=' + message3.toString() + ",type: "+ message3.$className);
 ## Medium 
 [Frida iOS Intercept Api](https://medium.com/p/a5c4ef22a093)
 
-## Working with
-|Application|Demo|Request Class & Method|Response Class & MEthod|
-|-----------|----|----------------------|-----------------------|
-|OceanBank|https://youtu.be/hn1GV-JCpjc|||
-|SaiGonBank Smart Banking|https://youtu.be/7C0SLvtI7RY|||
-|BaoViet Smart|https://youtu.be/1JWRDhR79qk|||
+## Technical Presentation
+|Title|Link|
+|-----|----|
+|Frida iOS Intercept Api|https://medium.com/p/a5c4ef22a093|
+|Frida iOS Intercept API &#124; Technical &#124; How to Intercept Encrypted APIs on The Application &#124; Part 1|https://youtu.be/BIB3ma3Tl34|
+|Frida iOS Intercept API &#124; Technical &#124; How to Intercept Encrypted APIs on The Application &#124; Part 2|https://youtu.be/IojcakLNtrA|
+
+## Demo
+|Title|Link|
+|-----|----|
+|Frida iOS Intercept API &#124; Demo &#124; How to Intercept Encrypted APIs on  OceanBank Application|https://youtu.be/cJwLdXd6dhg|
+|Frida iOS Intercept API &#124; Demo &#124; How to Intercept Encrypted APIs on  SaiGonBank Smart Banking Application||
+|Frida iOS Intercept API &#124; Demo &#124; How to Intercept Encrypted APIs on  BaoViet Smart Application||
