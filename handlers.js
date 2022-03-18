@@ -1,4 +1,10 @@
-/*HANDLERS SCRIPT VERSION 1.3*/
+/*************************************************************************************
+ * Name: Intercept Encrypted API
+ * OS: iOS
+ * Author: @noobpk
+ * Source: https://github.com/noobpk/frida-ios-intercept-api
+ **************************************************************************************/
+
 /*Terminal Color*/
 var colors = {
     "resetColor": "\x1b[0m",

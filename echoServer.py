@@ -1,6 +1,7 @@
 from http.server import HTTPServer, BaseHTTPRequestHandler
 from optparse import OptionParser
 from log import *
+import sys
 
 print ('''\033[1;31m \n
             _           _____                          
@@ -33,13 +34,17 @@ class RequestHandler(BaseHTTPRequestHandler):
 
 def main():
     try:
-        logger.info('[*] Listening on 127.0.0.1:%d' % ECHO_PORT)
-        server = HTTPServer(('', ECHO_PORT), RequestHandler)
-        server.serve_forever()
+        if sys.version_info < (3, 0):
+            logger.error("[x_x] iOS hook requires Python 3.x")
+            sys.exit(0)
+        else:
+            logger.info('[*] Starting echoServer on port %d' % ECHO_PORT)
+            logger.info('[*] Listening on 127.0.0.1:%d' % ECHO_PORT)
+            server = HTTPServer(('', ECHO_PORT), RequestHandler)
+            server.serve_forever()
 
     except KeyboardInterrupt:
         logger.info("Stop echoServer!!")
 
 if __name__ == "__main__":
-    logger.info('[*] Starting echoServer on port %d' % ECHO_PORT)
     main()
