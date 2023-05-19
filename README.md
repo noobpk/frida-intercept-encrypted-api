@@ -61,8 +61,10 @@ console.log('msg3=' + message3.toString() + ",type: "+ message3.$className);
 |Frida iOS Intercept API &#124; Technical &#124; How to Intercept Encrypted APIs on The Application &#124; Part 2|https://youtu.be/IojcakLNtrA|
 
 ## Demo
-|Title|Link|
+`Not available for some reason`
+
+<!-- |Title|Link|
 |-----|----|
-|Frida iOS Intercept API &#124; Demo &#124; How to Intercept Encrypted APIs on  OceanBank Application|https://youtu.be/cJwLdXd6dhg|
-|Frida iOS Intercept API &#124; Demo &#124; How to Intercept Encrypted APIs on  SaiGonBank Smart Banking Application|https://youtu.be/_WR-4tXEeg4|
-|Frida iOS Intercept API &#124; Demo &#124; How to Intercept Encrypted APIs on  BaoViet Smart Application|https://youtu.be/nrRlqJ8xpCo|
+|Frida iOS Intercept API &#124; Demo &#124; How to Intercept Encrypted APIs on  OBank Application|https://youtu.be/cJwLdXd6dhg|
+|Frida iOS Intercept API &#124; Demo &#124; How to Intercept Encrypted APIs on  SBank Smart Banking Application|https://youtu.be/_WR-4tXEeg4|
+|Frida iOS Intercept API &#124; Demo &#124; How to Intercept Encrypted APIs on  BS Application|https://youtu.be/nrRlqJ8xpCo| -->
