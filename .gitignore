@@ -130,3 +130,4 @@ dmypy.json
 
 # Custom script
 custom_*
+py-env/

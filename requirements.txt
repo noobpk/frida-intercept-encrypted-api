@@ -1,0 +1,4 @@
+frida
+frida-tools
+colorlog
+requests
