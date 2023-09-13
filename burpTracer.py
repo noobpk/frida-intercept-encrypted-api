@@ -15,7 +15,7 @@ print ('''\033[1;31m \n
  | | |__| |____) |  _| |_| | | | ||  __/ | | (_|  __/ |_) | |_ 
  |_|\____/|_____/  |_____|_| |_|\__\___|_|  \___\___| .__/ \__|
         https://noobpk.github.io      #noobteam     | |        
-           Intercept Api in iOS Application         |_|        
+           Intercept Api in iOS/Android Application |_|        
 ''')
 
 print ("\033[1;34m[*]___author___: @noobpk\033[1;37m")
@@ -113,38 +113,6 @@ def main():
     args, leftovers = parser.parse_known_args()
 
     try:
-        #Spawning application with default script
-        if args.package is not None and args.script is None:
-            #check echoServer
-            check_echo_server()
-            #
-            logger.info('[*] Spawning: ' + args.package)
-            logger.info('[*] Script: ' + 'handlers.js')
-            time.sleep(2)
-            device = frida.get_usb_device()
-            pid = device.spawn(args.package)
-            device.resume(pid)
-            time.sleep(1)
-            session = device.attach(pid)
-            with open("handlers.js") as f:
-                script = session.create_script(f.read())
-            script.on("message", frida_process_message)
-            script.load()
-            input()
-        #Attaching default script to application
-        if args.name is not None and args.script is None:
-            #check echoServer
-            check_echo_server()
-            #
-            logger.info('[*] Attaching: ' + args.name)
-            logger.info('[*] Script: ' + 'handlers.js')
-            time.sleep(2)
-            process = frida.get_usb_device().attach(args.name)
-            with open("handlers.js") as f:
-                script = process.create_script(f.read())
-            script.on("message", frida_process_message)
-            script.load()
-            input()
         # Spawing application with custom script
         if args.package is not None and args.script is not None:
             #check echoServer
