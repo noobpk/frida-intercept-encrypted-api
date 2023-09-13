@@ -2,7 +2,7 @@
  * Name: Intercept Encrypted API
  * OS: iOS
  * Author: @noobpk
- * Source: https://github.com/noobpk/frida-ios-intercept-api
+ * Source: https://github.com/noobpk/frida-intercept-encrypted-api
  **************************************************************************************/
 
 /*Terminal Color*/
