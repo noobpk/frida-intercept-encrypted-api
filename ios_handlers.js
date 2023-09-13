@@ -104,25 +104,61 @@ function search_response_classes(){
     return classes_response_found;
 }
 
-function print_arguments(args) {
-/*
-Frida's Interceptor has no information about the number of arguments, because there is no such 
-information available at the ABI level (and we don't rely on debug symbols).
-
-I have implemented this function in order to try to determine how many arguments a method is using.
-It stops when:
-    - The object is not nil
-    - The argument is not the same as the one before    
+/**
+ * The function `print_arguments` takes an array of arguments and prints information about each
+ * argument, including its type, byte representation in hexadecimal, string representation, and binary
+ * data representation.
+ * @param args - The `args` parameter is an array of arguments passed to a function. In this case, it
+ * seems to be an array of Objective-C objects.
  */
-    var n = 100;
-    var last_arg = '';
-    for (var i = 2; i < n; ++i) {
-        var arg = (new ObjC.Object(args[i])).toString();
-        if (arg == 'nil' || arg == last_arg) {
-            break;
+function print_arguments(args) {
+    try {
+        var n = 100;
+        var last_arg = '';
+        for (var i = 2; i < n; ++i) {
+            var arg = (new ObjC.Object(args[i])).toString();
+            if (arg == 'nil' || arg == last_arg) {
+                break;
+            }
+            last_arg = arg;
+            console.log('\t[+] Dump Arg' + i + ': ' + (new ObjC.Object(args[i])).toString());
+            var data = new ObjC.Object(args[i]);
+            console.log(colors.green, "\t\t[-] Arugment type: ", colors.resetColor);
+            console.log("\t\t\t", data.$className);
+            /* Converting Byte to HexString */
+            console.log(colors.green, "\t\t[-] Bytes to Hex:", colors.resetColor);
+            try {
+                var arg = ObjC.Object(args[2]);
+                var length = arg.length().valueOf();
+                var bytes = arg.bytes();
+                var byteString = "";
+                for (var i = 0; i < length; i++) {
+                    var byte = bytes.add(i).readU8();
+                    byteString += byte.toString(16).padStart(2, '0'); // Convert to hex and pad with leading zero if needed
+                }
+                console.log("\t\t\t", byteString);
+            } catch (err_bytes2hex) {
+                console.log(colors.red, "\t\t\t[x] Cannot convert Byte to Hex. Error: ", err_bytes2hex, colors.resetColor);
+            }
+            /* Converting NSData to String */
+            console.log(colors.green, "\t\t[-] NSData to String: ", colors.resetColor);
+            try {
+                var buf = data.bytes().readUtf8String(data.length());
+                console.log("\t\t\t", buf);
+            } catch (err_nsdata2string) {
+                console.log(colors.red, "\t\t\t[x] Cannot convert NSData to String. Error: ", err_nsdata2string, colors.resetColor);
+            }
+            /* Converting NSData to Binary Data */
+            console.log(colors.green, "\t\t[-] NSData to Binary Data: ", colors.resetColor);
+            try {
+                var buf = data.bytes().readByteArray(data.length());
+                console.log(hexdump(buf, { ansi: true }));
+            } catch (err_nsdata2bin) {
+                console.log(colors.red, "\t\t\t[x] Cannot convert NSData to Binary Data. Error: ", err_nsdata2bin, colors.resetColor);
+            }
         }
-        last_arg = arg;
-        console.log('\t[-] arg' + i + ': ' + (new ObjC.Object(args[i])).toString());
+    } catch (err_dump) {
+        console.log(colors.red, "\t\t\t[x] Cannot dump all arugment in method . Error: ", err_dump, colors.resetColor);
     }
 }
 
@@ -174,14 +210,13 @@ if (ObjC.available)
                     // console.log('   ' + this._className + ' --> ' + this._methodName);
                     // console.log(colors.green,"[DEBUG-REQUEST] Dump Arugment in method: ",colors.resetColor);
                     // print_arguments(args);
-                    // console.log(ObjC.Object(args[3]));
-                    // var message1 = ObjC.Object(args[2]);
-                    // var message2 = ObjC.Object(args[3]);
-                    // var message3 = ObjC.Object(args[4]);
-
-                    // console.log('msg1=' + message1.toString() + ",type: "+ message1.$className);
-                    // console.log('msg2=' + message2.toString() + ",type: "+ message2.$className);
-                    // console.log('msg3=' + message3.toString() + ",type: "+ message3.$className);
+                    /* Backtrace */
+                    // console.log(colors.green, "[+] Backtrace: ", colors.resetColor);
+                    // try {
+                    //     console.log(Thread.backtrace(this.context, Backtracer.ACCURATE).map(DebugSymbol.fromAddress).join("\n\t"));
+                    // } catch (err_backtrace) {
+                    //     console.log(colors.red, "\t\t\t[x] Cannot backtrace . Error: ", err_backtrace, colors.resetColor);
+                    // }
                     
 
                     this.buf = ObjC.Object(args[3]).toString();
@@ -228,7 +263,7 @@ if (ObjC.available)
                     op.wait();
                 },
                 onLeave: function(retval, state) {
-                    
+                    //
                 }
             });
         }
@@ -259,16 +294,14 @@ if (ObjC.available)
                     // console.log('   ' + this._className + ' --> ' + this._methodName);
                     // console.log(colors.green,"[DEBUG-RESPONSE] Dump Arugment in method: ",colors.resetColor);
                     // print_arguments(args);
-                    // console.log(ObjC.Object(args[2]));
-                    // var message1 = ObjC.Object(args[2]);
-                    // var message2 = ObjC.Object(args[3]);
-                    // var message3 = ObjC.Object(args[4]);
-
-                    // console.log('msg1=' + message1.toString() + ",type: "+ message1.$className);
-                    // console.log('msg2=' + message2.toString() + ",type: "+ message2.$className);
-                    // console.log('msg3=' + message3.toString() + ",type: "+ message3.$className);
+                    /* Backtrace */
+                    // console.log(colors.green, "[+] Backtrace: ", colors.resetColor);
+                    // try {
+                    //     console.log(Thread.backtrace(this.context, Backtracer.ACCURATE).map(DebugSymbol.fromAddress).join("\n\t"));
+                    // } catch (err_backtrace) {
+                    //     console.log(colors.red, "\t\t\t[x] Cannot backtrace . Error: ", err_backtrace, colors.resetColor);
+                    // }
                     
-
                     this.buf = ObjC.Object(args[2]).toString();
 
                     var js = {};
@@ -308,7 +341,7 @@ if (ObjC.available)
                     op.wait();
                 },
                 onLeave: function(retval, state) {
-                    
+                    //
                 }
             });
         }
