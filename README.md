@@ -14,9 +14,10 @@ Hooking into functions that send request/response and intercept data before it i
 
 <img width="1440" alt="image" src="https://user-images.githubusercontent.com/31820707/156509245-163d4877-3bcd-423f-adbe-0edc9e1bf43a.png">
 
-### For IOS
+## For IOS
 
-## Configurage handlers.js
+### Configurage ios_handlers.js
+
 1. Add your Request / Response Class & Method
 ```
 /*Request Class & Method*/
@@ -27,19 +28,11 @@ var search_request_method = [''];
 var search_response_class  = [''];
 var search_response_method = [''];`
 ```
-2. Debug ARGS in method
+2. Debug ARGS in Class & Method
 ```
 /*DEBUG REQUEST HERE*/
 console.log(colors.green,"[DEBUG-REQUEST] Dump Arugment in method: ",colors.resetColor);
 print_arguments(args);
-console.log(ObjC.Object(args[3]));
-var message1 = ObjC.Object(args[2]);
-var message2 = ObjC.Object(args[3]);
-var message3 = ObjC.Object(args[4]);
-
-console.log('msg1=' + message1.toString() + ",type: "+ message1.$className);
-console.log('msg2=' + message2.toString() + ",type: "+ message2.$className);
-console.log('msg3=' + message3.toString() + ",type: "+ message3.$className);
 ```
 
 ### For Android
@@ -51,7 +44,7 @@ Update Soon
      - Listen on 127.0.0.1:26080
      - Redirect to 127.0.0.1:27080 and Check (Support invisible proxying)
  1. Run echoServer.py
- 1. Config and optimize `handlers.js`
+ 1. Config and optimize `_handlers.js`
  1. Run burpTracer.py -p com.apple.AppStore / [-n 'App Store']
 
 `Note: Different applications will use different libraries. You need to reverse or trace the application to find the correct function.`
