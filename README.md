@@ -53,9 +53,6 @@ Update Soon
 
 `Note: Different applications will use different libraries. You need to reverse or trace the application to find the correct function.`
 
-## Medium 
-[Frida Intercept Encrypted Api](https://medium.com/p/a5c4ef22a093)
-
 ## Technical Presentation
 |Title|Link|
 |-----|----|
