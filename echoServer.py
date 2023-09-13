@@ -35,7 +35,7 @@ class RequestHandler(BaseHTTPRequestHandler):
 def main():
     try:
         if sys.version_info < (3, 0):
-            logger.error("[x_x] iOS hook requires Python 3.x")
+            logger.error("[x_x] echoServer requires Python 3.x")
             sys.exit(0)
         else:
             logger.info('[*] Starting echoServer on port %d' % ECHO_PORT)
@@ -43,6 +43,9 @@ def main():
             server = HTTPServer(('', ECHO_PORT), RequestHandler)
             server.serve_forever()
 
+    except Exception as e:
+        logger.error("[x_x] Something went wrong, please check your error message.\n Message - {0}".format(e))
+        
     except KeyboardInterrupt:
         logger.info("Stop echoServer!!")
 
