@@ -14,7 +14,7 @@ print ('''\033[1;31m \n
   | || | | | ||  __/ | | (_|  __/ |_) | |_   / ___ \|  __/| | 
  |___|_| |_|\__\___|_|  \___\___| .__/ \__| /_/   \_\_|  |___|
                                 |_|
-        https://noobpk.github.io      #noobteam       
+        https://noobpk.github.io      #noobboy       
            Intercept Api in iOS/Android Application       
 ''')
 
