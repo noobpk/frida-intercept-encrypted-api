@@ -1,4 +1,4 @@
-# Frida iOS intercept api 
+# Frida Intercept Encrypted Api 
 <img width="655" alt="image" src="https://user-images.githubusercontent.com/31820707/148044919-9f1440cb-e3b1-40d1-adbc-5b7f03306df2.png">
 
 [![CodeQL](https://github.com/noobpk/frida-ios-intercept-api/actions/workflows/codeql-analysis.yml/badge.svg?branch=main)](https://github.com/noobpk/frida-ios-intercept-api/actions/workflows/codeql-analysis.yml)
@@ -13,6 +13,8 @@ Hooking into functions that send request/response and intercept data before it i
 ## Architecture
 
 <img width="1440" alt="image" src="https://user-images.githubusercontent.com/31820707/156509245-163d4877-3bcd-423f-adbe-0edc9e1bf43a.png">
+
+### For IOS
 
 ## Configurage handlers.js
 1. Add your Request / Response Class & Method
@@ -40,6 +42,10 @@ console.log('msg2=' + message2.toString() + ",type: "+ message2.$className);
 console.log('msg3=' + message3.toString() + ",type: "+ message3.$className);
 ```
 
+### For Android
+
+Update Soon
+
 ## Usage
  1. Load `burpsuite_configuration_proxy.json` or Set up Burpsuite Proxy by following the steps below
      - Listen on 127.0.0.1:26080
@@ -51,20 +57,12 @@ console.log('msg3=' + message3.toString() + ",type: "+ message3.$className);
 `Note: Different applications will use different libraries. You need to reverse or trace the application to find the correct function.`
 
 ## Medium 
-[Frida iOS Intercept Api](https://medium.com/p/a5c4ef22a093)
+[Frida Intercept Encrypted Api](https://medium.com/p/a5c4ef22a093)
 
 ## Technical Presentation
 |Title|Link|
 |-----|----|
-|Frida iOS Intercept Api|https://medium.com/p/a5c4ef22a093|
-|Frida iOS Intercept API &#124; Technical &#124; How to Intercept Encrypted APIs on The Application &#124; Part 1|https://youtu.be/BIB3ma3Tl34|
-|Frida iOS Intercept API &#124; Technical &#124; How to Intercept Encrypted APIs on The Application &#124; Part 2|https://youtu.be/IojcakLNtrA|
+|Frida Intercept Encrypted Api|https://medium.com/p/a5c4ef22a093|
+|Frida Intercept Encrypted API &#124; Technical &#124; How to Intercept Encrypted APIs on The Application &#124; Part 1|https://youtu.be/BIB3ma3Tl34|
+|Frida Intercept Encrypted API &#124; Technical &#124; How to Intercept Encrypted APIs on The Application &#124; Part 2|https://youtu.be/IojcakLNtrA|
 
-## Demo
-`Not available for some reason`
-
-<!-- |Title|Link|
-|-----|----|
-|Frida iOS Intercept API &#124; Demo &#124; How to Intercept Encrypted APIs on  OBank Application|https://youtu.be/cJwLdXd6dhg|
-|Frida iOS Intercept API &#124; Demo &#124; How to Intercept Encrypted APIs on  SBank Smart Banking Application|https://youtu.be/_WR-4tXEeg4|
-|Frida iOS Intercept API &#124; Demo &#124; How to Intercept Encrypted APIs on  BS Application|https://youtu.be/nrRlqJ8xpCo| -->
