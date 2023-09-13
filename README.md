@@ -41,7 +41,16 @@ print_arguments(args);
 
 ### For Android
 
-Update Soon
+1. Add your Request / Response Class & Method
+```
+/*Request Class & Method*/
+    var request_class = Java.use('');
+    var request_method = '';
+
+    /*Response Class & Method*/
+    var response_class = Java.use('');
+    var response_method = '';
+```
 
 ## Usage
  1. Load `burpsuite_configuration_proxy.json` or Set up Burpsuite Proxy by following the steps below

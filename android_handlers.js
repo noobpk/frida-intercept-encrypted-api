@@ -14,9 +14,11 @@ var colors = {
 }
 
 Java.perform(function () {
+    /*Request Class & Method*/
     var request_class = Java.use('');
     var request_method = '';
 
+    /*Response Class & Method*/
     var response_class = Java.use('');
     var response_method = '';
 
