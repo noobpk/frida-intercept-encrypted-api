@@ -1,9 +1,13 @@
 # Frida Intercept Encrypted Api 
-<img width="655" alt="image" src="https://user-images.githubusercontent.com/31820707/148044919-9f1440cb-e3b1-40d1-adbc-5b7f03306df2.png">
+
+<img width="512" alt="image" src="https://github.com/noobpk/frida-intercept-encrypted-api/assets/31820707/313889af-1111-49f1-bcfb-76e61b5f8a0c">
 
 [![CodeQL](https://github.com/noobpk/frida-ios-intercept-api/actions/workflows/codeql-analysis.yml/badge.svg?branch=main)](https://github.com/noobpk/frida-ios-intercept-api/actions/workflows/codeql-analysis.yml)
 ![python](https://img.shields.io/badge/python-3.x-blue)
 ![frida](https://img.shields.io/badge/frida-15.x-orange)
+![ios](https://img.shields.io/badge/ios-orange)
+![android](https://img.shields.io/badge/android-green)
+
 
 ## 📍What does it help?
 Banking applications, e-wallets, .. are increasingly enhanced security to fight hackers. One of them is to encrypt request/response data when sending and receiving. Some weak encryptions can be decrypted easily, but some strong encryptions like RSA are difficult.
