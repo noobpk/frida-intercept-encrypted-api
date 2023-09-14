@@ -38,16 +38,16 @@ Java.perform(function () {
         }).wait();
         
         if (rcv_data === "FAILURE") {
-            var result = this.c(a);
+            var result = this.request_method(request);
         }
         else {
-            var result = this.c(rcv_data);
+            var result = this.request_method(rcv_data);
         }
         return result;
     }
 
     response_class.response_method.overload('java.lang.String').implementation = function (response) {
-        onsole.log(colors.green, "[Original Response Body]\n", colors.resetColor, JSON.stringify(response), '\n');
+        console.log(colors.green, "[Original Response Body]\n", colors.resetColor, JSON.stringify(response), '\n');
         send({ from: '/http', payload: JSON.stringify(js), api_path: 'response' })
 
         var rcv_data = "FAILURE";
@@ -62,10 +62,10 @@ Java.perform(function () {
         }).wait();
 
         if (rcv_data === "FAILURE") {
-            var result = this.c(a);
+            var result = this.response_method(response);
         }
         else {
-            var result = this.c(rcv_data);
+            var result = this.response_method(rcv_data);
         }
         return result;
     }
