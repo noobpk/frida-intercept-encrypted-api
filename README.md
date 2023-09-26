@@ -39,7 +39,9 @@ console.log(colors.green,"[DEBUG-REQUEST] Dump Arugment in method: ",colors.rese
 print_arguments(args);
 ```
 
-### For Android
+## For Android
+
+### Configurage android_handlers.js
 
 1. Add your Request / Response Class & Method
 ```
